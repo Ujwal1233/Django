@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body id="body">
+    <center><h1>{{name}}'s Favourite</h1></center>
+    <div>
+        <h2>Fav bird:{{bird}}</h2>
+        <h2><a href="https:/en.wikipedia.org/wiki/Peafowl">click here to know</a></h2>
+        <img src="{% static 'image/peacock.jpg' %}">
+    </div>
+    <div>
+        <h2>Fav animal:{{animal}}</h2>
+        <h2><a href="https:/en.wikipedia.org/wiki/lion">click here to know</a></h2>
+        <img src="{% static 'image/tiger.jpg' %}">
+    </div>
+    <div>
+        <h2>Fav food:{{food}}</h2>
+        <h2><a href="https:/en.wikipedia.org/wiki/biryani">click here to know</a></h2>
+        <img src="{% static 'image/biryani.jpg' %}">
+    </div>
+</body>
+</html>
