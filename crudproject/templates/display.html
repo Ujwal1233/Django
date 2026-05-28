@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard</title>
+    <style>
+        :root { color-scheme: light; font-family: Arial, sans-serif; }
+        body { margin: 0; background: linear-gradient(135deg, #eff6ff, #f8fafc); color: #0f172a; }
+        .page { max-width: 1200px; margin: 0 auto; padding: 24px; }
+        .hero { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 18px; }
+        .badge { display: inline-block; background: #2563eb; color: white; padding: 6px 10px; border-radius: 999px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
+        h1 { margin: 8px 0 0; font-size: 2rem; }
+        .muted { color: #475569; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; text-decoration: none; border-radius: 10px; padding: 10px 14px; font-weight: 700; transition: transform .15s ease; }
+        .btn:hover { transform: translateY(-1px); }
+        .btn-primary { background: linear-gradient(135deg, #2563eb, #1d4ed8); color: #fff; box-shadow: 0 10px 20px rgba(37, 99, 235, 0.25); }
+        .btn-secondary { background: #e2e8f0; color: #0f172a; }
+        .btn-danger { background: #dc2626; color: #fff; }
+        .card { background: rgba(255,255,255,0.92); border: 1px solid #dbe4f0; border-radius: 18px; box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08); padding: 18px; }
+        table { width: 100%; border-collapse: collapse; overflow: hidden; border-radius: 14px; }
+        th, td { text-align: left; padding: 12px 10px; border-bottom: 1px solid #e5e7eb; font-size: 14px; }
+        th { background: #eff6ff; color: #1e3a8a; text-transform: uppercase; letter-spacing: 0.06em; font-size: 12px; }
+        td a { margin-right: 8px; text-decoration: none; font-weight: 600; }
+        .chip { display: inline-block; padding: 6px 8px; border-radius: 999px; background: #dbeafe; color: #1d4ed8; font-size: 12px; font-weight: 700; }
+        .empty { padding: 24px; text-align: center; color: #64748b; }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="hero">
+            <div>
+                <span class="badge">CRUD Dashboard</span>
+                <h1>Employee Directory</h1>
+                <p class="muted">Manage employee records with a polished interface and quick actions.</p>
+            </div>
+            <a class="btn btn-primary" href="{% url 'insert' %}">+ Add Employee</a>
+        </div>
+
+        <div class="card">
+            {% if employees %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Email</th>
+                        <th>Place</th>
+                        <th>Job</th>
+                        <th>Salary</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for emp in employees %}
+                    <tr>
+                        <td>#{{ emp.id }}</td>
+                        <td>{{ emp.name }}</td>
+                        <td>{{ emp.age }}</td>
+                        <td>{{ emp.email }}</td>
+                        <td>{{ emp.place }}</td>
+                        <td><span class="chip">{{ emp.job }}</span></td>
+                        <td>${{ emp.salary }}</td>
+                        <td>
+                            <a class="btn btn-secondary" href="{% url 'update' emp.id %}">Edit</a>
+                            <a class="btn btn-danger" href="{% url 'delete' emp.id %}" onclick="return confirm('Delete this employee record?');">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="empty">No employee records yet. Add your first employee to get started.</div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
