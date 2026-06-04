@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 20px;
+    }
+    h1 {
+        color: #000000;
+        font-size: 50px;
+    }
+    a {
+        color: #007bff;
+        text-decoration: none;
+        font-size: 18px;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
+<body>
+    <center>
+        <h1>List of Doctors</h1>
+        {% for i in doctor_list %}
+        <a href="{% url 'doctor_details' i.id %}">{{ i.name }}'s Details</a>
+        <br>
+        <br>
+        {% endfor %}
+    </center>
+</body>
+</html>
