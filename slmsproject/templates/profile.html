@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - SLMS</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            width: 100%;
+            max-width: 600px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        .header { margin-bottom: 20px; }
+        .header h1 { color:#333; font-size: 28px; margin-bottom: 6px; }
+        .header p { color:#666; font-size: 14px; }
+        .card {
+            background: #f7f7ff;
+            border: 1px solid #e6e6ff;
+            padding: 18px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+        .row { margin: 12px 0; }
+        .label { font-weight: 700; color:#333; margin-bottom: 6px; font-size: 14px; }
+        .value { color:#555; font-size: 16px; }
+        .actions { margin-top: 20px; display:flex; gap:12px; flex-wrap: wrap; }
+        a.btn, button.btn {
+            display:inline-block;
+            padding: 10px 16px;
+            border-radius: 6px;
+            text-decoration:none;
+            font-weight: 700;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+        }
+        a.btn.primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        a.btn.secondary { background: #eee; color: #333; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Welcome, {{ request.user.username }}</h1>
+            <p>Staff Leave Management System</p>
+        </div>
+
+        <div class="card">
+            <div class="row">
+                <div class="label">Username</div>
+                <div class="value">{{ request.user.username }}</div>
+            </div>
+            <div class="row">
+                <div class="label">Role</div>
+                <div class="value">{{ role|default:"(not set)" }}</div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <a class="btn primary" href="{% url 'staff_dashboard' %}">Staff Dashboard</a>
+            <a class="btn secondary" href="{% url 'home' %}">Home</a>
+        </div>
+
+    </div>
+</body>
+</html>
+

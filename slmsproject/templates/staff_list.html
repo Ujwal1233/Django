@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Staff List{% endblock %}
+
+{% block header_actions %}
+    <a class="button ghost" href="{% url 'admin_dashboard' %}">Dashboard</a>
+    <a class="button" href="{% url 'add_staff' %}">Add Staff</a>
+{% endblock %}
+
+{% block content %}
+<section class="table-panel">
+    <div class="table-toolbar">
+        <div>
+            <div class="eyebrow">Staff directory</div>
+            <h2 class="section-title" style="font-size: 2rem;">Staff users</h2>
+            <p class="section-lead">Review the staff accounts that are currently active in the system.</p>
+        </div>
+        <div class="inline-actions">
+            <a class="button secondary" href="{% url 'add_staff' %}">Add New Staff</a>
+            <a class="button ghost" href="{% url 'admin_dashboard' %}">Back to Dashboard</a>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Role</th>
+                <th>User ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for profile in staff_profiles %}
+                <tr>
+                    <td>{{ profile.user.username }}</td>
+                    <td><span class="status-pill approved">{{ profile.role|title }}</span></td>
+                    <td>{{ profile.user.id }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3">No staff users found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

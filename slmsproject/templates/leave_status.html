@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Status - SLMS</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            width: 100%;
+            max-width: 850px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        h1 { color:#333; font-size: 28px; margin-bottom: 6px; }
+        p { color:#666; font-size: 14px; margin-bottom: 20px; }
+        .top-actions { display:flex; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+        a.btn {
+            display:inline-block;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 900;
+            font-size: 14px;
+            text-decoration:none;
+            background:#eee;
+            color:#333;
+            border: 1px solid #ddd;
+        }
+        table { width:100%; border-collapse: collapse; }
+        th, td { border: 1px solid #eaeaea; padding: 10px; text-align:left; font-size: 14px; }
+        th { background:#f7f7f7; color:#333; }
+        .status { font-weight: 900; }
+        .pending { color:#8a6d3b; }
+        .approved { color:#155724; }
+        .rejected { color:#721c24; }
+        .empty { padding: 14px; background:#f7f7ff; border:1px solid #e6e6ff; border-radius: 8px; color:#444; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Your Leave Requests</h1>
+    <p>View the status of your leave requests.</p>
+
+    <div class="top-actions">
+        <a class="btn" href="{% url 'staff_dashboard' %}">Back</a>
+        <a class="btn" href="{% url 'staff_apply_leave' %}">Apply Leave</a>
+    </div>
+
+    {% if requests %}
+        <table>
+            <thead>
+                <tr>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Reason</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for r in requests %}
+                <tr>
+                    <td>{{ r.from_date }}</td>
+                    <td>{{ r.to_date }}</td>
+                    <td>{{ r.reason }}</td>
+                    <td class="status {% if r.status == 'PENDING' %}pending{% elif r.status == 'APPROVED' %}approved{% else %}rejected{% endif %}">{{ r.status }}</td>
+                    <td>{{ r.created_at }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="empty">No leave requests found.</div>
+    {% endif %}
+</div>
+</body>
+</html>
+
+

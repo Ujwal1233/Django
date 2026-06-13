@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Apply Leave{% endblock %}
+
+{% block header_actions %}
+    <a class="button ghost" href="{% url 'my_leaves' %}">My Leaves</a>
+    <a class="button secondary" href="{% url 'hero' %}">Dashboard</a>
+{% endblock %}
+
+{% block content %}
+<section class="card" style="max-width: 620px; margin: 0 auto;">
+    <div class="stack">
+        <div>
+            <div class="eyebrow">Leave request</div>
+            <h2 class="section-title" style="font-size: 2rem;">Apply for leave</h2>
+            <p class="section-lead">Share your leave details and submit the request for review.</p>
+        </div>
+
+        <form method="POST" class="form-grid">
+            {% csrf_token %}
+            <div class="field-group">
+                <label for="leave_type">Leave Type</label>
+                <select id="leave_type" name="leave_type" required>
+                    <option value="">-- Select Leave Type --</option>
+                    <option value="casual">Casual Leave</option>
+                    <option value="sick">Sick Leave</option>
+                    <option value="earned">Earned Leave</option>
+                </select>
+            </div>
+
+            <div class="field-group">
+                <label for="start_date">Start Date</label>
+                <input id="start_date" name="start_date" type="date" required>
+            </div>
+
+            <div class="field-group">
+                <label for="end_date">End Date</label>
+                <input id="end_date" name="end_date" type="date" required>
+            </div>
+
+            <div class="field-group">
+                <label for="reason">Reason</label>
+                <textarea id="reason" name="reason" required></textarea>
+            </div>
+
+            <button type="submit">Submit Leave Request</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

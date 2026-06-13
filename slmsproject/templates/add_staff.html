@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Staff{% endblock %}
+
+{% block header_actions %}
+    <a class="button ghost" href="{% url 'staff_list' %}">Staff List</a>
+    <a class="button secondary" href="{% url 'admin_dashboard' %}">Dashboard</a>
+{% endblock %}
+
+{% block content %}
+<section class="card" style="max-width: 560px; margin: 0 auto;">
+    <div class="stack">
+        <div>
+            <div class="eyebrow">Staff management</div>
+            <h2 class="section-title" style="font-size: 2rem;">Add a staff account</h2>
+            <p class="section-lead">Create a fresh staff login with a few details and send them straight to the system.</p>
+        </div>
+
+        <form method="POST" class="form-grid">
+            {% csrf_token %}
+            <div class="field-group">
+                <label for="username">Username</label>
+                <input id="username" name="username" type="text" required>
+            </div>
+
+            <div class="field-group">
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password" required>
+            </div>
+
+            <button type="submit">Create Staff</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

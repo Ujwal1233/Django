@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block header_actions %}
+    <a class="button ghost" href="{% url 'home' %}">Home</a>
+    <a class="button secondary" href="{% url 'logout' %}">Logout</a>
+{% endblock %}
+
+{% block content %}
+<section class="hero-panel">
+    <div class="hero-grid">
+        <div class="hero-copy">
+            <div class="eyebrow">Admin overview</div>
+            <h2 class="hero-title">Manage staff and leave approvals from one place.</h2>
+            <p class="page-lead">Track pending leave requests, keep an eye on staffing, and move through admin actions without the clutter of a heavy control panel.</p>
+            <div class="cta-row" style="margin-top: 22px;">
+                <a class="button" href="{% url 'all_leave_requests' %}">View Leave Requests</a>
+                <a class="button secondary" href="{% url 'staff_list' %}">View Staff</a>
+                <a class="button ghost" href="{% url 'add_staff' %}">Add Staff</a>
+            </div>
+        </div>
+
+        <div class="card stack">
+            <p class="subtitle">Welcome, {{ request.user.username }}!</p>
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <p class="stat-label">Total Staff</p>
+                    <p class="stat-value">{{ staff_count }}</p>
+                </div>
+                <div class="stat-card">
+                    <p class="stat-label">Pending Leave</p>
+                    <p class="stat-value">{{ pending_requests }}</p>
+                </div>
+                <div class="stat-card">
+                    <p class="stat-label">All Requests</p>
+                    <p class="stat-value">{{ total_requests }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

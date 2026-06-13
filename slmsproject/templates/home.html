@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}SLMS Home{% endblock %}
+
+{% block header_actions %}
+    <a class="button ghost" href="{% url 'login' %}">Login</a>
+    <a class="button" href="{% url 'register' %}">Register</a>
+{% endblock %}
+
+{% block content %}
+<section class="hero-panel">
+    <div class="hero-grid">
+        <div class="hero-copy">
+            <div class="eyebrow">Leave management made calm</div>
+            <h2 class="hero-title">A softer, clearer way to manage staff leave.</h2>
+            <p class="page-lead">Keep leave requests, approvals, staff access, and daily operations in one polished workspace. Built for quick decisions and a cleaner experience.</p>
+            <div class="cta-row" style="margin-top: 22px;">
+                <a class="button" href="{% url 'login' %}">Login</a>
+                <a class="button secondary" href="{% url 'register' %}">Create Account</a>
+            </div>
+        </div>
+        <div class="card stack">
+            <div>
+                <p class="subtitle">What the system gives you</p>
+                <h3 class="section-title" style="font-size: 1.6rem;">Focused dashboards for staff and admin</h3>
+            </div>
+            <p class="support-text">Apply for leave, review requests, manage staff accounts, and track the current state of approvals without extra clutter.</p>
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <p class="stat-label">Flow</p>
+                    <p class="stat-value">Fast</p>
+                </div>
+                <div class="stat-card">
+                    <p class="stat-label">Style</p>
+                    <p class="stat-value">Warm</p>
+                </div>
+                <div class="stat-card">
+                    <p class="stat-label">Focus</p>
+                    <p class="stat-value">Clear</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

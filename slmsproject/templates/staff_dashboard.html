@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Dashboard - SLMS</title>
+    <style>
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            width: 100%;
+            max-width: 900px;
+            padding: 50px 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            animation: slideInUp 0.8s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            pointer-events: none;
+        }
+
+        h1 {
+            color: white;
+            font-size: 36px;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            font-weight: 800;
+            animation: fadeInDown 0.8s ease-out 0.2s both;
+            position: relative;
+            z-index: 1;
+        }
+
+        p { 
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+            margin-bottom: 30px;
+            font-weight: 300;
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+            position: relative;
+            z-index: 1;
+        }
+
+        h2 {
+            color: white;
+            font-size: 22px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            animation: fadeInDown 0.8s ease-out 0.4s both;
+            position: relative;
+            z-index: 1;
+        }
+
+        .grid {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+            position: relative;
+            z-index: 1;
+        }
+
+        a.btn {
+            display: inline-block;
+            padding: 14px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 15px;
+            border: 2px solid transparent;
+            transform: translateZ(0);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        a.btn.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        a.btn.secondary {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        a.btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 25px 50px rgba(102, 126, 234, 0.5);
+            filter: brightness(1.1);
+        }
+
+        a.btn:active {
+            transform: translateY(-2px) scale(0.98);
+        }
+
+        .note {
+            margin-top: 25px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 20px;
+            border-radius: 15px;
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 14px;
+            line-height: 1.7;
+            animation: fadeInUp 0.8s ease-out 0.5s both;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+
+        .note:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .note b {
+            font-weight: 700;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease-out 0.45s both;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        table thead tr {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 700;
+        }
+
+        table th {
+            padding: 15px 12px;
+            text-align: left;
+            border: none;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        table tbody tr {
+            border: none;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+        }
+
+        table tbody tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        table tbody tr:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateX(5px);
+        }
+
+        table td {
+            padding: 14px 12px;
+            border: none;
+            font-size: 13px;
+        }
+
+        /* Action buttons in table */
+        a[href*="approve"], a[href*="reject"] {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            margin-right: 6px;
+            border: none;
+            cursor: pointer;
+        }
+
+        a[href*="approve"] {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            box-shadow: 0 8px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        a[href*="approve"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(40, 167, 69, 0.5);
+        }
+
+        a[href*="reject"] {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            box-shadow: 0 8px 15px rgba(220, 53, 69, 0.3);
+        }
+
+        a[href*="reject"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(220, 53, 69, 0.5);
+        }
+
+        /* Status badge */
+        span[style*="background: #28a745"] {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.4);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 8px rgba(40, 167, 69, 0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 35px 25px;
+                border-radius: 25px;
+                max-width: 100%;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+
+            p {
+                font-size: 14px;
+            }
+
+            .grid {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            a.btn {
+                width: 100%;
+                padding: 12px 25px;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            table th, table td {
+                padding: 10px 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 25px 15px;
+                border-radius: 20px;
+            }
+
+            h1 {
+                font-size: 22px;
+                margin-bottom: 8px;
+            }
+
+            p {
+                font-size: 13px;
+                margin-bottom: 20px;
+            }
+
+            h2 {
+                font-size: 16px;
+                margin-top: 25px;
+                margin-bottom: 15px;
+            }
+
+            a.btn {
+                padding: 10px 20px;
+                font-size: 12px;
+            }
+
+            table {
+                font-size: 11px;
+            }
+
+            table th, table td {
+                padding: 8px 5px;
+            }
+
+            a[href*="approve"], a[href*="reject"] {
+                padding: 6px 10px;
+                font-size: 10px;
+                margin-right: 3px;
+            }
+        }
+    </style>
+
+</head>
+<body>
+<div class="container">
+    {% if role == "admin" %}
+    <!-- ADMIN PANEL -->
+    <h1>Admin Panel - Leave Approvals</h1>
+    <p>Welcome {{ request.user.username }}. Review and approve/reject pending leave requests.</p>
+
+    {% if pending_requests %}
+        <h2>Pending Approval Requests</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Employee Name</th>
+                    <th>From Date</th>
+                    <th>To Date</th>
+                    <th>Reason</th>
+                    <th style="text-align: center;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for request in pending_requests %}
+                <tr>
+                    <td>{{ request.user.get_full_name|default:request.user.username }}</td>
+                    <td>{{ request.from_date }}</td>
+                    <td>{{ request.to_date }}</td>
+                    <td>{{ request.reason }}</td>
+                    <td style="text-align: center;">
+                        <a href="{% url 'staff_approve_leave' request.id %}">Approve</a>
+                        <a href="{% url 'staff_reject_leave' request.id %}">Reject</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="note">
+            ✓ No pending leave requests. All leaves have been reviewed!
+        </div>
+    {% endif %}
+
+    <div class="note">
+        <b>Admin Panel Features:</b><br/>
+        • Review all pending leave requests<br/>
+        • Approve or reject requests with a single click<br/>
+        • Keep track of all employee leave applications
+    </div>
+
+    {% else %}
+    <!-- STAFF PANEL -->
+    <h1>Staff Dashboard</h1>
+    <p>Welcome {{ request.user.username }}. Manage your leave requests and approvals.</p>
+
+    <div class="grid">
+        <a class="btn primary" href="{% url 'staff_apply_leave' %}">Apply Leave</a>
+        <a class="btn secondary" href="{% url 'staff_leave_status' %}">View All Requests</a>
+    </div>
+
+    <!-- Approved Leaves Section -->
+    {% if staff_leaves %}
+        <h2>Your Approved Leaves</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>From Date</th>
+                    <th>To Date</th>
+                    <th>Reason</th>
+                    <th style="text-align: center;">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for leave in staff_leaves %}
+                <tr>
+                    <td>{{ leave.from_date }}</td>
+                    <td>{{ leave.to_date }}</td>
+                    <td>{{ leave.reason }}</td>
+                    <td style="text-align: center;">
+                        <span style="display: inline-block; padding: 6px 12px; background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; border-radius: 8px; font-size: 12px; font-weight: bold;">✓ APPROVED</span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="note">
+            You have no approved leaves yet. Apply for leave to get started!
+        </div>
+    {% endif %}
+
+    <div class="note">
+        <b>Staff Portal Features:</b><br/>
+        • <b>Apply Leave:</b> Submit new leave requests for admin approval<br/>
+        • <b>View All Requests:</b> See all your leave applications and their status<br/>
+        • <b>Approved Leaves:</b> View your approved leaves above
+    </div>
+    </div>
+
+    {% endif %}
+</div>
+</body>
+</html>
+

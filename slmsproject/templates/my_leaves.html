@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}My Leaves{% endblock %}
+
+{% block header_actions %}
+    <a class="button ghost" href="{% url 'hero' %}">Dashboard</a>
+    <a class="button" href="{% url 'apply_leave' %}">Apply Leave</a>
+{% endblock %}
+
+{% block content %}
+<section class="table-panel">
+    <div class="table-toolbar">
+        <div>
+            <div class="eyebrow">Your requests</div>
+            <h2 class="section-title" style="font-size: 2rem;">My leave requests</h2>
+            <p class="section-lead">Check the status of your submitted leave applications and admin notes.</p>
+        </div>
+        <div class="inline-actions">
+            <a class="button secondary" href="{% url 'apply_leave' %}">Apply New Leave</a>
+            <a class="button ghost" href="{% url 'hero' %}">Back to Dashboard</a>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Total Days</th>
+                <th>Reason</th>
+                <th>Status</th>
+                <th>Admin Comment</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for leave in leaves %}
+                <tr>
+                    <td>{{ leave.get_leave_type_display }}</td>
+                    <td>{{ leave.start_date }}</td>
+                    <td>{{ leave.end_date }}</td>
+                    <td>{{ leave.total_days }}</td>
+                    <td>{{ leave.reason }}</td>
+                    <td><span class="status-pill {{ leave.status }}">{{ leave.status|title }}</span></td>
+                    <td>{{ leave.admin_comment|default:'-' }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="7">No leave requests found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

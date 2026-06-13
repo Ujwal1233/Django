@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}All Leave Requests{% endblock %}
+
+{% block header_actions %}
+    <a class="button ghost" href="{% url 'admin_dashboard' %}">Dashboard</a>
+    <a class="button secondary" href="{% url 'staff_list' %}">Staff List</a>
+{% endblock %}
+
+{% block content %}
+<section class="table-panel">
+    <div class="table-toolbar">
+        <div>
+            <div class="eyebrow">Approval queue</div>
+            <h2 class="section-title" style="font-size: 2rem;">All leave requests</h2>
+            <p class="section-lead">Review submissions, add a note, and approve or reject requests cleanly.</p>
+        </div>
+        <div class="inline-actions">
+            <a class="button ghost" href="{% url 'admin_dashboard' %}">Back to Dashboard</a>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Staff</th>
+                <th>Type</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Days</th>
+                <th>Reason</th>
+                <th>Status</th>
+                <th>Admin Comment</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for leave in leaves %}
+                <tr>
+                    <td>{{ leave.user.username }}</td>
+                    <td>{{ leave.get_leave_type_display }}</td>
+                    <td>{{ leave.start_date }}</td>
+                    <td>{{ leave.end_date }}</td>
+                    <td>{{ leave.total_days }}</td>
+                    <td>{{ leave.reason }}</td>
+                    <td><span class="status-pill {{ leave.status }}">{{ leave.status|title }}</span></td>
+                    <td>{{ leave.admin_comment|default:'-' }}</td>
+                    <td>
+                        {% if leave.status == 'pending' %}
+                            <div class="actions-stack">
+                                <form method="POST" action="{% url 'update_leave_status' leave.id 'approved' %}" class="form-grid">
+                                    {% csrf_token %}
+                                    <textarea name="admin_comment" placeholder="Optional comment"></textarea>
+                                    <button type="submit">Approve</button>
+                                </form>
+                                <form method="POST" action="{% url 'update_leave_status' leave.id 'rejected' %}" class="form-grid">
+                                    {% csrf_token %}
+                                    <textarea name="admin_comment" placeholder="Optional comment"></textarea>
+                                    <button type="submit" class="secondary-button">Reject</button>
+                                </form>
+                            </div>
+                        {% else %}
+                            <span class="support-text small-text">No action available</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="9">No leave requests found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

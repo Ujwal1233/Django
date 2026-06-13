@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Register - SLMS{% endblock %}
+
+{% block header_actions %}
+    <a class="button ghost" href="{% url 'home' %}">Home</a>
+    <a class="button secondary" href="{% url 'login' %}">Login</a>
+{% endblock %}
+
+{% block content %}
+<section class="card" style="max-width: 560px; margin: 0 auto;">
+    <div class="stack">
+        <div>
+            <div class="eyebrow">Create access</div>
+            <h2 class="section-title" style="font-size: 2rem;">Register your account</h2>
+            <p class="section-lead">Set up a staff account or request the first admin account from the portal.</p>
+        </div>
+
+        <form method="POST" class="form-grid">
+            {% csrf_token %}
+            <div class="field-group">
+                <label for="username">User Name</label>
+                <input id="username" type="text" name="username" required>
+            </div>
+
+            <div class="field-group">
+                <label for="password">Password</label>
+                <input id="password" type="password" name="password" required>
+            </div>
+
+            <div class="field-group">
+                <label for="role">Role</label>
+                <select id="role" name="role" required>
+                    <option value="">---Select Role---</option>
+                    <option value="admin">Admin</option>
+                    <option value="staff">Staff</option>
+                </select>
+            </div>
+
+            <p class="support-text">Admin can manage staff and approve leave requests.</p>
+            <button type="submit">Register</button>
+        </form>
+
+        <p class="support-text small-text">Already have an account? <a href="{% url 'login' %}">Login</a></p>
+    </div>
+</section>
+{% endblock %}

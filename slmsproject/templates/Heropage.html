@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Staff Dashboard{% endblock %}
+
+{% block header_actions %}
+    <a class="button ghost" href="{% url 'apply_leave' %}">Apply Leave</a>
+    <a class="button secondary" href="{% url 'my_leaves' %}">My Requests</a>
+    <a class="button" href="{% url 'logout' %}">Logout</a>
+{% endblock %}
+
+{% block content %}
+<section class="hero-panel">
+    <div class="hero-grid">
+        <div class="hero-copy">
+            <div class="eyebrow">Staff portal</div>
+            <h2 class="hero-title">A focused dashboard for your leave workflow.</h2>
+            <p class="page-lead">Submit new requests, review status changes, and keep track of approvals from one soft, readable workspace.</p>
+            <div class="cta-row" style="margin-top: 22px;">
+                <a class="button" href="{% url 'apply_leave' %}">Apply Leave</a>
+                <a class="button secondary" href="{% url 'my_leaves' %}">View My Leaves</a>
+            </div>
+        </div>
+
+        <div class="card stack">
+            <p class="subtitle">Welcome, {{ request.user.username }}</p>
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <p class="stat-label">Pending</p>
+                    <p class="stat-value">{{ pending_count }}</p>
+                </div>
+                <div class="stat-card">
+                    <p class="stat-label">Approved</p>
+                    <p class="stat-value">{{ approved_count }}</p>
+                </div>
+                <div class="stat-card">
+                    <p class="stat-label">Rejected</p>
+                    <p class="stat-value">{{ rejected_count }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
